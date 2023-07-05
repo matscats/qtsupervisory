@@ -6,12 +6,24 @@ MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent), ui(new Ui::MainWindow){
   ui->setupUi(this);
   socket = new QTcpSocket(this);
-  tcpConnect();
 
-  connect(ui->pushButtonPut,
+  connect(ui->pushButtonStart,
           SIGNAL(clicked(bool)),
           this,
-          SLOT(putData()));
+          SLOT(putData())
+          );
+
+  connect(ui->pushButtonConnect,
+          SIGNAL(clicked(bool)),
+          this,
+          SLOT(tcpConnect())
+          );
+
+  connect(ui->pushButtonDisconnect,
+          SIGNAL(clicked(bool)),
+          this,
+          SLOT(tcpDisconnect())
+          );
 }
 
 void MainWindow::tcpConnect(){
@@ -20,11 +32,25 @@ void MainWindow::tcpConnect(){
     qDebug() << "Connected";
   }
   else{
-    qDebug() << "Disconnected";
+    qDebug() << "There was an error in connecting to host";
+  }
+}
+
+void MainWindow::tcpDisconnect()
+{
+  if(socket->state() == QAbstractSocket::ConnectedState)
+  {
+    socket->disconnectFromHost();
+    qDebug() << "Disconnected from host";
+  }
+  else
+  {
+    qDebug() << "You are not connected to any host";
   }
 }
 
 void MainWindow::putData(){
+
   QDateTime datetime;
   QString str;
   qint64 msecdate;

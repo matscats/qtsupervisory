@@ -14,80 +14,34 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QTextBrowser" name="textBrowser">
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>-10</y>
-      <width>251</width>
-      <height>401</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QScrollBar" name="verticalScrollBar">
-    <property name="geometry">
-     <rect>
-      <x>600</x>
-      <y>0</y>
-      <width>16</width>
-      <height>391</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Vertical</enum>
-    </property>
-   </widget>
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>12</x>
-      <y>12</y>
-      <width>321</width>
-      <height>371</height>
+      <x>3</x>
+      <y>0</y>
+      <width>611</width>
+      <height>391</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="1" column="3" colspan="3">
-      <widget class="QPushButton" name="pushButtonDisconnect">
+     <item row="1" column="0" colspan="2">
+      <widget class="QPushButton" name="pushButtonConnect">
        <property name="text">
-        <string>Disconnect</string>
+        <string>Connect</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="0" colspan="6">
-      <widget class="QLineEdit" name="lineEditIP"/>
-     </item>
-     <item row="3" column="4" colspan="2">
-      <widget class="QLCDNumber" name="lcdNumberMax"/>
-     </item>
-     <item row="2" column="1" colspan="3">
-      <widget class="QSlider" name="horizontalSliderMin">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0" colspan="2">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Timing(s)</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="4" colspan="2">
-      <widget class="QLCDNumber" name="lcdNumberTime"/>
-     </item>
-     <item row="5" column="3" colspan="3">
-      <widget class="QPushButton" name="pushButtonStop">
-       <property name="text">
-        <string>Stop</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1" colspan="3">
+     <item row="3" column="1" colspan="2">
       <widget class="QSlider" name="horizontalSliderMax">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Max</string>
        </property>
       </widget>
      </item>
@@ -98,27 +52,13 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="4" colspan="2">
+     <item row="2" column="4">
       <widget class="QLCDNumber" name="lcdNumberMin"/>
      </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Max</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0" colspan="3">
-      <widget class="QPushButton" name="pushButtonConnect">
-       <property name="text">
-        <string>Connect</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0" colspan="3">
-      <widget class="QPushButton" name="pushButtonStart">
-       <property name="text">
-        <string>Start</string>
+     <item row="0" column="6" rowspan="6">
+      <widget class="QScrollBar" name="verticalScrollBar">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
        </property>
       </widget>
      </item>
@@ -134,6 +74,53 @@
         <enum>Qt::Horizontal</enum>
        </property>
       </widget>
+     </item>
+     <item row="1" column="3" colspan="2">
+      <widget class="QPushButton" name="pushButtonDisconnect">
+       <property name="text">
+        <string>Disconnect</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="4">
+      <widget class="QLCDNumber" name="lcdNumberMax"/>
+     </item>
+     <item row="5" column="3" colspan="2">
+      <widget class="QPushButton" name="pushButtonStop">
+       <property name="text">
+        <string>Stop</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="5" rowspan="6">
+      <widget class="QTextBrowser" name="textBrowser"/>
+     </item>
+     <item row="4" column="4">
+      <widget class="QLCDNumber" name="lcdNumberTime"/>
+     </item>
+     <item row="5" column="0" colspan="2">
+      <widget class="QPushButton" name="pushButtonStart">
+       <property name="text">
+        <string>Start</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1" colspan="2">
+      <widget class="QSlider" name="horizontalSliderMin">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0" colspan="2">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Timing(s)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" colspan="3">
+      <widget class="QLineEdit" name="lineEditIP"/>
      </item>
     </layout>
    </widget>

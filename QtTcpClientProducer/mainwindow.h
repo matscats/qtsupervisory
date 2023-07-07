@@ -21,10 +21,14 @@ public slots:
   void tcpConnect();
   void tcpDisconnect();
   void putData();
+  void controlTimerStart();
+  void controlTimerStop();
+  void timerEvent(QTimerEvent *timer);
 
 private:
   Ui::MainWindow *ui;
   QTcpSocket *socket;
+  int temp;
 };
 
 #endif // MAINWINDOW_H

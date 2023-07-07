@@ -11,24 +11,24 @@ class MainWindow;
 
 class MainWindow : public QMainWindow
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  explicit MainWindow(QWidget *parent = 0);
-  ~MainWindow();
-  
+    explicit MainWindow(QWidget *parent = 0);
+    ~MainWindow();
+
 public slots:
-  void tcpConnect();
-  void tcpDisconnect();
-  void putData();
-  void controlTimerStart();
-  void controlTimerStop();
-  void timerEvent(QTimerEvent *timer);
+    void tcpConnect();
+    void tcpDisconnect();
+    void putData();
+    void controlTimerStart();
+    void controlTimerStop();
+    void timerEvent(QTimerEvent *timer);
 
 private:
-  Ui::MainWindow *ui;
-  QTcpSocket *socket;
-  int temp;
+    Ui::MainWindow *ui;
+    QTcpSocket *socket;
+    int temp;
 };
 
 #endif // MAINWINDOW_H

@@ -26,33 +26,33 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             );
 
     connect(ui->pushButtonStop,
-               SIGNAL(clicked(bool)),
-               this,
-               SLOT(controlTimerStop())
-               );
+            SIGNAL(clicked(bool)),
+            this,
+            SLOT(controlTimerStop())
+            );
 }
 
 void MainWindow::tcpConnect()
 {
-    socket->connectToHost("127.0.0.1",1234);
+    QString ip = ui->lineEditIP->text();
+    socket->connectToHost(ip,1234);
 
     if(!(socket->waitForConnected(3000)))
     {
-        qDebug() << "There was an error in connecting to host";
+        ui->labelStatus->setText("Erro ao conectar");
         return;
     }
-    qDebug() << "Connected";
+    ui->labelStatus->setText("Conectado");
 }
 
 void MainWindow::tcpDisconnect()
 {
     if(!(socket->state() == QAbstractSocket::ConnectedState))
     {
-        qDebug() << "You are not connected to any host";
         return;
     }
     socket->disconnectFromHost();
-    qDebug() << "Disconnected from host";
+    ui->labelStatus->setText("Desconectado");
 }
 
 void MainWindow::putData()

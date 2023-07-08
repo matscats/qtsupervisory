@@ -35,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 void MainWindow::tcpConnect()
 {
     QString ip = ui->lineEditIP->text();
+
     socket->connectToHost(ip,1234);
 
     if(!(socket->waitForConnected(3000)))
@@ -47,7 +48,7 @@ void MainWindow::tcpConnect()
 
 void MainWindow::tcpDisconnect()
 {
-    if(!(socket->state() == QAbstractSocket::ConnectedState))
+    if(socket->state() != QAbstractSocket::ConnectedState)
     {
         return;
     }

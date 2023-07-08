@@ -4,25 +4,33 @@
 #include <QMainWindow>
 #include <QTcpSocket>
 #include <QDebug>
+#include <QListWidget>
 
-namespace Ui {
-class MainWindow;
+namespace Ui
+{
+    class MainWindow;
 }
 
 class MainWindow : public QMainWindow
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  explicit MainWindow(QWidget *parent = 0);
-  ~MainWindow();
-  
-  void tcpConnect();
+    explicit MainWindow(QWidget *parent = 0);
+    ~MainWindow();
+
 public slots:
-  void getData();
+    void tcpConnect();
+    void tcpDisconnect();
+    void getData();
+    void showProducers();
+//    void setProducerIP();
+//    void timerEvent(QTimerEvent *timer);
+
 private:
-  Ui::MainWindow *ui;
-  QTcpSocket *socket;
+    Ui::MainWindow *ui;
+    QTcpSocket *socket;
+    QString selectedProducerIP;
 };
 
 #endif // MAINWINDOW_H

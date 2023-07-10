@@ -24,12 +24,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->pushButtonUpdate,
             SIGNAL(clicked(bool)),
             this,
-            SLOT(getData())
-            );
-
-    connect(ui->pushButtonUpdate,
-            SIGNAL(clicked(bool)),
-            this,
             SLOT(showProducers())
            );
 }
@@ -60,24 +54,31 @@ void MainWindow::tcpDisconnect()
 
 void MainWindow::showProducers()
 {
+    QString str;
+
     if(socket->state() != QAbstractSocket::ConnectedState)
     {
         return;
     }
 
-    if (socket->state() != QAbstractSocket::ListeningState)
-    {
-        return;
-    }
-
-
     ui->listWidgetIP->clear();
 
-    QList<QTcpSocket*> connectedProducers = socket->findChildren<QTcpSocket*>();
+    socket->write("list\r\n");
+    socket->waitForBytesWritten();
+    socket->waitForReadyRead();
+    while(socket->bytesAvailable())
+    {
+        str = socket->readLine().replace("\n","").replace("\r","");
 
-    for (QTcpSocket* producer : connectedProducers) {
-        QString producer_ip = producer->peerAddress().toString();
-        ui->listWidgetIP->addItem(producer_ip);
+        qDebug() << str.size();
+
+        if (str.size() == 0)
+        {
+            return;
+        }
+
+        ui->listWidgetIP->addItem(str);
+
     }
 }
 

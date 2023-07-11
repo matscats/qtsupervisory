@@ -25,7 +25,19 @@ MainWindow::MainWindow(QWidget *parent) :
             SIGNAL(clicked(bool)),
             this,
             SLOT(showProducers())
-           );
+            );
+
+    connect(ui->pushButtonStart,
+            SIGNAL(clicked(bool)),
+            this,
+            SLOT(controlTimerStart())
+            );
+
+    connect(ui->pushButtonStop,
+            SIGNAL(clicked(bool)),
+            this,
+            SLOT(controlTimerStop())
+            );
 }
 
 void MainWindow::tcpConnect()
@@ -66,11 +78,10 @@ void MainWindow::showProducers()
     socket->write("list\r\n");
     socket->waitForBytesWritten();
     socket->waitForReadyRead();
+
     while(socket->bytesAvailable())
     {
         str = socket->readLine().replace("\n","").replace("\r","");
-
-        qDebug() << str.size();
 
         if (str.size() == 0)
         {
@@ -82,43 +93,54 @@ void MainWindow::showProducers()
     }
 }
 
-//void MainWindow::setProducerIP()
-//{
-//    if(!(socket->state() == QAbstractSocket::ConnectedState))
-//    {
-//        return;
-//    }
-//    ui->lineEditIP->text()
-//}
+void MainWindow::setProducerIP()
+{
+    if(socket->state() != QAbstractSocket::ConnectedState)
+    {
+        return;
+    }
 
-void MainWindow::getData(){
-    QString str;
-    QByteArray array;
-    QStringList list;
-    qint64 thetime;
-    qDebug() << "to get data...";
-    if(socket->state() == QAbstractSocket::ConnectedState){
-        if(socket->isOpen()){
-            qDebug() << "reading...";
-            socket->write("get 127.0.0.1 5\r\n");
-            socket->waitForBytesWritten();
-            socket->waitForReadyRead();
-            qDebug() << socket->bytesAvailable();
-            while(socket->bytesAvailable()){
-                str = socket->readLine().replace("\n","").replace("\r","");
-                list = str.split(" ");
-                if(list.size() == 2){
-                    bool ok;
-                    str = list.at(0);
-                    thetime = str.toLongLong(&ok);
-                    str = list.at(1);
-                    qDebug() << thetime << ": " << str;
-                }
-            }
-        }
+    this->selectedProducerIP = ui->lineEditIP->selectedText();
+}
+
+void MainWindow::getData()
+{
+    QString str, get_command;
+    QByteArray aux;
+
+    get_command = "get" + selectedProducerIP + "\r\n";
+    aux = get_command.toLatin1();
+
+    socket->write(aux);
+    socket->waitForBytesWritten();
+    socket->waitForReadyRead();
+
+    if (socket->bytesAvailable())
+    {
+        str = socket->readLine().replace("\n","").replace("\r","");
+        ui->textBrowser->append(str);
     }
 }
 
+void MainWindow::timerEvent(QTimerEvent *timer)
+{
+    getData();
+}
+
+void MainWindow::controlTimerStart()
+{
+    QString str = "Getting data";
+    ui->textBrowser->append(str);
+    temp = startTimer(ui->horizontalSliderTiming->value() * 1000);
+}
+
+void MainWindow::controlTimerStop()
+{
+    QString str;
+    str = "Stop getting data";
+    ui->textBrowser->append(str);
+    killTimer(temp);
+}
 
 MainWindow::~MainWindow()
 {

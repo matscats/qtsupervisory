@@ -24,10 +24,13 @@ public slots:
     void tcpDisconnect();
     void getData();
     void showProducers();
-//    void setProducerIP();
-//    void timerEvent(QTimerEvent *timer);
+    void setProducerIP();
+    void controlTimerStart();
+    void controlTimerStop();
+    void timerEvent(QTimerEvent *timer);
 
 private:
+    unsigned int temp;
     Ui::MainWindow *ui;
     QTcpSocket *socket;
     QString selectedProducerIP;

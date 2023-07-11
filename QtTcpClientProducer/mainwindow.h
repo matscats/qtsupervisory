@@ -28,7 +28,7 @@ public slots:
 private:
     Ui::MainWindow *ui;
     QTcpSocket *socket;
-    int temp;
+    unsigned int temp;
 };
 
 #endif // MAINWINDOW_H

@@ -108,7 +108,7 @@ void MainWindow::getData()
     QString str, get_command;
     QByteArray aux;
 
-    get_command = "get" + selectedProducerIP + "\r\n";
+    get_command = "get " + ui->listWidgetIP->currentItem()->text() + " 1\r\n";
     aux = get_command.toLatin1();
 
     socket->write(aux);

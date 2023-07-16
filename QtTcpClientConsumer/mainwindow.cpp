@@ -82,12 +82,6 @@ void MainWindow::showProducers()
     while(socket->bytesAvailable())
     {
         str = socket->readLine().replace("\n","").replace("\r","");
-
-        if (str.size() == 0)
-        {
-            return;
-        }
-
         ui->listWidgetIP->addItem(str);
 
     }
@@ -118,7 +112,6 @@ void MainWindow::getData()
     if (socket->bytesAvailable())
     {
         str = socket->readLine().replace("\n","").replace("\r","");
-        ui->textBrowser->append(str);
     }
 }
 
@@ -129,16 +122,11 @@ void MainWindow::timerEvent(QTimerEvent *timer)
 
 void MainWindow::controlTimerStart()
 {
-    QString str = "Getting data";
-    ui->textBrowser->append(str);
     temp = startTimer(ui->horizontalSliderTiming->value() * 1000);
 }
 
 void MainWindow::controlTimerStop()
 {
-    QString str;
-    str = "Stop getting data";
-    ui->textBrowser->append(str);
     killTimer(temp);
 }
 

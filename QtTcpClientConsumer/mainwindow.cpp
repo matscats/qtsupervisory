@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDateTime>
+#include <vector>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -101,18 +102,35 @@ void MainWindow::getData()
 {
     QString str, get_command;
     QByteArray aux;
+    QStringList list;
+    std::vector<long> time;
+    std::vector<int> data;
 
-    get_command = "get " + ui->listWidgetIP->currentItem()->text() + " 1\r\n";
+    if (socket->state() != QAbstractSocket::ConnectedState)
+    {
+        return;
+    }
+
+    get_command = "get " + ui->listWidgetIP->currentItem()->text() + " 4\r\n";
     aux = get_command.toLatin1();
 
     socket->write(aux);
     socket->waitForBytesWritten();
     socket->waitForReadyRead();
 
-    if (socket->bytesAvailable())
+    while (socket->bytesAvailable())
     {
         str = socket->readLine().replace("\n","").replace("\r","");
+        list = str.split(" ");
+
+        if (list.size() == 2)
+        {
+            time.push_back(list.at(0).toLong());
+            data.push_back(list.at(1).toInt());
+        }
     }
+
+    ui->widget->setData(time, data);
 }
 
 void MainWindow::timerEvent(QTimerEvent *timer)
@@ -122,12 +140,12 @@ void MainWindow::timerEvent(QTimerEvent *timer)
 
 void MainWindow::controlTimerStart()
 {
-    temp = startTimer(ui->horizontalSliderTiming->value() * 1000);
+    this->temp = startTimer(ui->horizontalSliderTiming->value() * 1000);
 }
 
 void MainWindow::controlTimerStop()
 {
-    killTimer(temp);
+    killTimer(this->temp);
 }
 
 MainWindow::~MainWindow()

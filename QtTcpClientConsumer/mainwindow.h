@@ -5,6 +5,7 @@
 #include <QTcpSocket>
 #include <QDebug>
 #include <QListWidget>
+#include "plotter.h"
 
 namespace Ui
 {
